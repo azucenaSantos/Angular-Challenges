@@ -1,9 +1,14 @@
-import { provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { appConfig } from './app/app.config';
+
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { appRoutes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
-  ...appConfig,
-  providers: [provideZoneChangeDetection(), ...appConfig.providers],
+  providers: [
+    provideRouter(
+      appRoutes,
+      withComponentInputBinding(), //NECESARIO A PARTIR DE ANGULAR 16 PARA OBTENER INFO DE LA RUTA CON INPUTS
+    ),
+  ],
 }).catch((err) => console.error(err));
