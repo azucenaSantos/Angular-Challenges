@@ -38,6 +38,14 @@ export class ProfilePage {
   private userProfile = inject(UserProfileService);
   selectedProfile = signal<'admin' | 'user'>('admin');
 
+  ngOnInit() {
+    this.userProfile.getProfile().subscribe({
+      next: (response) => {
+        this.selectedProfile.set(response);
+      },
+    });
+  }
+
   chooseProfile(profile: 'admin' | 'user') {
     this.userProfile.setProfile(profile);
     this.selectedProfile.set(profile);

@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UserProfileService {
@@ -11,6 +10,6 @@ export class UserProfileService {
   }
 
   getProfile(): Observable<'admin' | 'user'> {
-    return of(this.profile()).pipe(delay(300));
+    return of(this.profile());
   }
 }
