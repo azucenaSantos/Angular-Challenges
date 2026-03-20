@@ -12,4 +12,8 @@ export class UserStore {
   add(user: User) {
     this.user.next(user);
   }
+
+  get userInfo(): User | null {
+    return this.user.value ?? null;
+  }
 }
