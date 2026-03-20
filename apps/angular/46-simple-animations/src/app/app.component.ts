@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { fadeInAnimation, staggerAnimation } from './app.animations';
 
 @Component({
+  animations: [fadeInAnimation, staggerAnimation], //Aqui añadimos las animaciones que creamos en el app.animations.ts
   imports: [],
   selector: 'app-root',
   styles: `
@@ -17,8 +19,10 @@ import { Component } from '@angular/core';
     }
   `,
   template: `
+    <!--ANGULAR RECOMIENDA USAR animate.enter="clase-estilos-css" PARA NO DEPENDER DEL USO DE LAS ANIMACIONES A PARTE-->
     <div class="mx-20 my-40 flex gap-5">
-      <section>
+      <section @fadeInAnimation>
+        <!--llamamos a la animacion en el bloque que queramos con un '@'-->
         <div>
           <h3>2008</h3>
           <p>
@@ -49,39 +53,24 @@ import { Component } from '@angular/core';
           </p>
         </div>
       </section>
-
-      <section>
-        <div class="list-item">
-          <span>Name:</span>
-          <span>Samuel</span>
-        </div>
-
-        <div class="list-item">
-          <span>Age:</span>
-          <span>28</span>
-        </div>
-
-        <div class="list-item">
-          <span>Birthdate:</span>
-          <span>02.11.1995</span>
-        </div>
-
-        <div class="list-item">
-          <span>City:</span>
-          <span>Berlin</span>
-        </div>
-
-        <div class="list-item">
-          <span>Language:</span>
-          <span>English</span>
-        </div>
-
-        <div class="list-item">
-          <span>Like Pizza:</span>
-          <span>Hell yeah</span>
-        </div>
+      <section @staggerAnimation>
+        <!--Trak; sobre que propiedad de cada item diferenciamos cada uno de ello en la lista-->
+        @for (item of list; track item.key) {
+          <div class="list-item">
+            <span>{{ item.key }}</span>
+            <span>{{ item.value }}</span>
+          </div>
+        }
       </section>
     </div>
   `,
 })
-export class AppComponent {}
+export class AppComponent {
+  readonly list: { key: string; value: string }[] = [
+    { key: 'Name', value: 'Samuel' },
+    { key: 'Age', value: '28' },
+    { key: 'Birthdate', value: 'City' },
+    { key: 'Language', value: 'English' },
+    { key: 'Like Pizza', value: 'Hell yeah' },
+  ];
+}
