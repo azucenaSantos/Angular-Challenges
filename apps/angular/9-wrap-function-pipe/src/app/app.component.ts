@@ -1,11 +1,20 @@
 import { Component } from '@angular/core';
+import { WrapFnPipe } from './wrapFn.pipe'; // Adjust the path as needed
 
 @Component({
   selector: 'app-root',
+  imports: [WrapFnPipe],
   template: `
+    <p>Version sin Pipe</p>
     @for (person of persons; track person.name) {
       {{ showName(person.name, $index) }}
       {{ isAllowed(person.age, $first) }}
+    }
+
+    <p>Version con Pipe</p>
+    @for (person of persons; track person.name) {
+      {{ [person.name, $index] | wrapFn: showName }}
+      {{ [person.age, $first] | wrapFn: isAllowed }}
     }
   `,
 })
