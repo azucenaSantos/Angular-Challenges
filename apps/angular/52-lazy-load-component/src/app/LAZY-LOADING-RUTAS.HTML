@@ -1,0 +1,111 @@
+<div>
+  <p>
+    Lazy Loading es un patron de diseño que consiste en retrasar la carga o
+    inicializacion de un objeto hasta el momento de su utilizacion
+  </p>
+
+  <p>Se obtienen o procesan objetos solamente cuando se necesitan, no antes.</p>
+  <p>
+    *Se hace esto porque si se obtienen todos los datos antes de usarlos puede
+    tener una mala experiencia de usuario!! (Cargar cosas innecesariamente -> no
+    ayuda a diferir cargas ni modularizar)
+  </p>
+</div>
+
+<h1>Como aplicar LAZY LOADING</h1>
+
+<div>
+  <p>Debemos crear</p>
+  <ul>
+    <li>
+      Un module y un routing.module POR CADA COMPONENTE que queremos utilizar
+    </li>
+  </ul>
+  <p>
+    Al tener cada componente un routing.module propio, ese routing es el que
+    llama a su module correspondiente
+  </p>
+  <p>
+    DESDE EL APP.ROUTING.MODULE es desde donde llamar a los modules de cada
+    componente (que ellos a su vez llaman a routing modules)
+  </p>
+</div>
+
+<p>
+  De esta forma, trabajando así, el app.module.ts queda más LIMPIO y los demás
+  componentes serán llamados a medida que sean solicitados por las rutas
+  establecidas
+</p>
+
+
+<p>
+    Lo que está MAL:
+    const routes: Routes = [
+    {
+        path: '',
+        component: AdminComponent,
+        children: [
+            {
+                path: 'battle',
+                component: BattleComponent
+            },
+            {
+                path: 'search',
+                component: SearchComponent
+            }
+        ]
+    },
+    {  path: '**', redirectTo: 'battle' },
+    ];
+</p>
+
+<p>
+    Lo que está BIEN:
+    const routes: Routes = [
+    {
+        path: '',
+        component: AdminComponent,
+        children: [
+            {
+                path: 'battle',
+                loadChildren: './modules/battle/battle.module#BattleModule'
+            },
+            {
+                path: 'search',
+                loadChildren: './modules/search/search.module#SearchModule'
+            }
+        ]
+    },
+    {  path: '**', redirectTo: 'battle' },
+    ];
+</p>
+
+
+<p>En caso de que un componente con routing.module tenga dentro más componentes hijos al que llamar,
+    se llamarían desde dentro del routing.module del padre con las path indicando el .module de los componentes hijos.
+</p>
+
+<p>
+    Resultado de un componente con .routing-module + hijosconst routes: Routes = [
+    {
+      path: '',
+      component: BattleComponent,
+      //NO TENDRIAMOS CHILDREN EN EL ROUTING.MODULE SI NO TUVIESE HIJOS, PERO COMO LOS TIENE SE LLAMAN DESDE AQUI
+      children: [
+       {
+         path: '',
+         redirectTo: 'battle-child',
+         pathMatch: 'full'
+       },
+       {
+         path: 'battle-child',
+         loadChildren:  './modules/battle/child/child.module#ChildModule'
+       },
+       {
+         path: 'battle-child-two',
+         loadChildren: './modules/battle/child-two/child-two.module#ChildTwoModule'
+       }
+      ]
+    }
+  ];
+</p>

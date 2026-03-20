@@ -13,6 +13,6 @@ import { Component } from '@angular/core';
       height: 50%;
     }
   `,
-  standalone: false,
+  standalone: true, //Necesario para poder llamarlo desde app.component
 })
 export class TopComponent {}
