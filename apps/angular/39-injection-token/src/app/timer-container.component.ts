@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { DEFAULT_TIMER } from './data';
+import { Component, Inject } from '@angular/core';
+import { TIMER_TOKEN } from './timer-token';
 import { TimerComponent } from './timer.component';
 @Component({
   selector: 'timer-container',
@@ -16,5 +16,7 @@ import { TimerComponent } from './timer.component';
   },
 })
 export class TimerContainerComponent {
-  timer = DEFAULT_TIMER;
+  //timer = DEFAULT_TIMER;
+
+  constructor(@Inject(TIMER_TOKEN) public timer: number) {}
 }

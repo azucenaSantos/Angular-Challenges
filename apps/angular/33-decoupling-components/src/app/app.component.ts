@@ -1,6 +1,8 @@
-import { BtnDisabledDirective } from '@angular-challenges/decoupling/brain';
-import { BtnHelmetDirective } from '@angular-challenges/decoupling/helmet';
+// import { BtnDisabledDirective } from '@angular-challenges/decoupling/brain';
+// import { BtnHelmetDirective } from '@angular-challenges/decoupling/helmet';
 import { Component } from '@angular/core';
+import { BtnDisabledDirective } from '../../../../../libs/decoupling/brain/src';
+import { BtnHelmetDirective } from '../../../../../libs/decoupling/helmet/src';
 
 @Component({
   imports: [BtnDisabledDirective, BtnHelmetDirective],
